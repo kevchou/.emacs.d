@@ -1,4 +1,3 @@
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;      My .emacs.d file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -6,19 +5,53 @@
 
 (setq default-directory "~/" )
 
-
 ;; Packages
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+;; OS specific settings
+(cond
+ ;; Windows Settings
+ ((string-equal system-type "windows-nt")
+  (progn
+    (message "Microsoft Windows")
+    (menu-bar-mode 0)                 ; Remove menu bar
+    ))
+
+ ;; Mac OS X Settings
+ ((string-equal system-type "darwin")
+  (progn
+    (message "Mac OS X")
+
+    ;; Switches command and alt keys
+    (setq mac-option-modifier 'super)
+    (setq mac-command-modifier 'meta)
+
+    ;; Loads the shell variables from $PATH
+    (exec-path-from-shell-initialize)
+
+    ;; Magit status
+    (global-set-key (kbd "C-c C-m") 'magit-status)
+
+    (menu-bar-mode 1)                 ; Menu bar is okay in OSX.
+    (setq ring-bell-function 'ignore) ; No ringing bell on error))
+ )
+
+
+(add-hook 'python-mode-hook
+          (progn
+            'jedi:setup
+            (auto-complete-mode t))
+(setq jedi:complete-on-dot t)
 
 (require 'ess-site)
 
+
 ;; Color parenthesis
 (require 'rainbow-delimiters)
-(rainbow-delimiters-mode)
+(rainbow-delimiters-mode t)
 
 
 ;; Add directory of file in the mode line
@@ -33,22 +66,15 @@
 ;; -------------------------------------------------------------------
 ;;    Operating System Tweaks
 ;; -------------------------------------------------------------------
-
-;; OS Specific settings
-(if (eq system-type 'windows-nt)
-    (progn
-      (menu-bar-mode 0)                 ; Remove menu bar
-      (setq w32-get-true-file-attributes nil)
-      ))
-
 ;; Default font
 (set-face-attribute 'default nil :font  "DejaVu Sans Mono-10" )
 
 
-
 (global-set-key (kbd "C-c s") 'eshell)
 
+(require 'ace-jump-mode)
 (global-set-key (kbd "C-c u") 'ace-jump-mode)
+
 
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -60,26 +86,6 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-
-
-;; OS X settings
-;; (if (eq system-type 'darwin)
-;;     (progn
-;;       ;; Use command key as Meta
-;;       (setq mac-option-modifier 'super)
-;;       (setq mac-command-modifier 'meta)
-
-;;       ;; Ispell in OSX
-;;       (setq ispell-program-name "/usr/local/bin/aspell")
-
-;;       (menu-bar-mode 1)                 ; Menu bar is okay in OSX.
-;;       (setq ring-bell-function 'ignore) ; No ringing bell on error
-
-;;       (add-to-list 'default-frame-alist
-;;                    '(font . "DejaVu Sans Mono-12"))
-
-;;       (global-set-key (kbd "C-c C-m") 'magit-status)
-;;       ))
 
 ;; -------------------------------------------------------------------
 ;;    Visual Tweaks
@@ -405,12 +411,14 @@ Including indent-buffer, which should not be called automatically on save."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(custom-enabled-themes (quote (tangotango)))
+ '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("cf205b711e61963020e2d1561e87cdbe7727679b58af25dcabfe5073572b16f0" "9cb6358979981949d1ae9da907a5d38fb6cde1776e8956a1db150925f2dad6c1" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "49e5a7955b853f70d1fe751b2f896921398b273aa62f47bda961a45f80219581" "0e121ff9bef6937edad8dfcff7d88ac9219b5b4f1570fd1702e546a80dba0832" "5d9351cd410bff7119978f8e69e4315fd1339aa7b3af6d398c5ca6fac7fd53c7" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "6e92ca53a22d9b0577ad0b16e07e2e020c8b621197e39fec454048e51b7954cb" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "31a01668c84d03862a970c471edbd377b2430868eccf5e8a9aec6831f1a0908d" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "cf205b711e61963020e2d1561e87cdbe7727679b58af25dcabfe5073572b16f0" "9cb6358979981949d1ae9da907a5d38fb6cde1776e8956a1db150925f2dad6c1" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "49e5a7955b853f70d1fe751b2f896921398b273aa62f47bda961a45f80219581" "0e121ff9bef6937edad8dfcff7d88ac9219b5b4f1570fd1702e546a80dba0832" "5d9351cd410bff7119978f8e69e4315fd1339aa7b3af6d398c5ca6fac7fd53c7" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "6e92ca53a22d9b0577ad0b16e07e2e020c8b621197e39fec454048e51b7954cb" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
  '(fci-rule-color "#383838")
  '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60)))
  '(vc-annotate-background "#2B2B2B")
