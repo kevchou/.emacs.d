@@ -37,14 +37,17 @@
 
     (menu-bar-mode 1)                 ; Menu bar is okay in OSX.
     (setq ring-bell-function 'ignore) ; No ringing bell on error))
+    ))
  )
 
 
 (add-hook 'python-mode-hook
           (progn
             'jedi:setup
-            (auto-complete-mode t))
+            (auto-complete-mode t)))
 (setq jedi:complete-on-dot t)
+(elpy-enable)
+
 
 (require 'ess-site)
 
@@ -351,9 +354,9 @@ Including indent-buffer, which should not be called automatically on save."
             (local-set-key (kbd "M-p") 'outline-previous-visible-heading)
             ))
 
-(setq org-startup-indented t)
-(setq org-hide-leading-stars t)         ; Hide leading stars
-(setq org-adapt-indentation nil)        ; Fix indentation
+;(setq org-startup-indented t)
+;(setq org-hide-leading-stars t)         ; Hide leading stars
+;(setq org-adapt-indentation nil)        ; Fix indentation
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
