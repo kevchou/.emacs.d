@@ -6,11 +6,6 @@
 (setq default-directory "~/" )
 
 
-;; Code Folding
-(global-set-key (kbd "C-M--") 'hs-hide-block)
-(global-set-key (kbd "C-M-=") 'hs-show-block)
-
-
 ;; Packages
 (require 'package)
 (package-initialize)
@@ -32,7 +27,7 @@
     (message "Mac OS X")
 
     ;; Switches command and alt keys
-    (setq mac-option-modifier 'super)
+    (setq mac-option-modifier 'meta)
     (setq mac-command-modifier 'meta)
 
     ;; Loads the shell variables from $PATH
@@ -46,13 +41,18 @@
     ))
  )
 
-
-(add-hook 'python-mode-hook
-          (progn
-            'jedi:setup
-            (auto-complete-mode t)))
-(setq jedi:complete-on-dot t)
+;; Python mode
 (elpy-enable)
+(add-hook 'python-mode-hook
+          (lambda ()
+            'jedi:setup
+            (setq hs-minor-mode t)
+            (auto-complete-mode t)
+            ))
+
+;; Code Folding
+(global-set-key (kbd "C-M--") 'hs-hide-block)
+(global-set-key (kbd "C-M-=") 'hs-show-block)
 
 
 (require 'ess-site)
