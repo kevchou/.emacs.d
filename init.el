@@ -38,6 +38,9 @@
 
     (menu-bar-mode 1)                 ; Menu bar is okay in OSX.
     (setq ring-bell-function 'ignore) ; No ringing bell on error))
+
+    ;; Default font
+    (set-face-attribute 'default nil :font  "DejaVu Sans Mono-12")
     ))
  )
 
@@ -75,8 +78,7 @@
 ;; -------------------------------------------------------------------
 ;;    Operating System Tweaks
 ;; -------------------------------------------------------------------
-;; Default font
-(set-face-attribute 'default nil :font  "DejaVu Sans Mono-12")
+
 
 
 (global-set-key (kbd "C-c s") 'eshell)
