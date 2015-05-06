@@ -17,12 +17,15 @@
 (global-set-key (kbd "C-c C-x C-e") 'replace-last-sexp)
 
 
-
 ;; Packages
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;; Evil mode
+(require 'evil)
+(evil-mode 1)
 
 ;; OS specific settings
 (cond
