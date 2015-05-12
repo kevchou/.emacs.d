@@ -445,7 +445,7 @@ Including indent-buffer, which should not be called automatically on save."
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("ee0bd3866d6eeaf2799531e10d5a0d6006a8c917eee75d769427a79ffdacfe4d" default)))
+    ("da7fa7211dd96fcf77398451e3f43052558f01b20eb8bee9ac0fd88627e11e22" "ee0bd3866d6eeaf2799531e10d5a0d6006a8c917eee75d769427a79ffdacfe4d" default)))
  '(fci-rule-color "#383838")
  '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60)))
  '(vc-annotate-background "#2B2B2B")
