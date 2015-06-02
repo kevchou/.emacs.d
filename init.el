@@ -24,8 +24,8 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 ;; Evil mode
-(require 'evil)
-(evil-mode 1)
+;; (require 'evil)
+;; (evil-mode 1)
 
 ;; OS specific settings
 (cond
@@ -442,10 +442,10 @@ Including indent-buffer, which should not be called automatically on save."
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(custom-enabled-themes (quote (zenburn)))
+ '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("da7fa7211dd96fcf77398451e3f43052558f01b20eb8bee9ac0fd88627e11e22" "ee0bd3866d6eeaf2799531e10d5a0d6006a8c917eee75d769427a79ffdacfe4d" default)))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "6a9606327ecca6e772fba6ef46137d129e6d1888dcfc65d0b9b27a7a00a4af20" "da7fa7211dd96fcf77398451e3f43052558f01b20eb8bee9ac0fd88627e11e22" "ee0bd3866d6eeaf2799531e10d5a0d6006a8c917eee75d769427a79ffdacfe4d" default)))
  '(fci-rule-color "#383838")
  '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60)))
  '(vc-annotate-background "#2B2B2B")
