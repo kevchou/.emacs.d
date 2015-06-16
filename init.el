@@ -6,6 +6,11 @@
 (setq default-directory "~/" )
 
 
+(set-face-background 'mode-line "black")
+(set-face-background 'modeline-inactive "grey20")
+
+(rainbow-delimiters-mode t)
+
 ;; Elisp
 ;; Replace last elisp expression with result
 (defun replace-last-sexp ()
