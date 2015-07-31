@@ -7,6 +7,30 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+(if (not (package-installed-p 'use-package))
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package)))
+
+(require 'use-package)
+
+(use-package multiple-cursors
+  :ensure multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+
+(use-package avy
+  :ensure avy)
+(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
+
+
+(use-package zenburn-theme
+  :ensure zenburn-theme)
+(load-theme 'zenburn t)
+
 ;; Evil mode
 ;; (require 'evil)
 ;; (evil-mode 1)
@@ -18,15 +42,6 @@
                '(:eval (substring default-directory
                                   (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
-
-(require 'ace-jump-mode)
-(global-set-key (kbd "C-c u") 'ace-jump-mode)
-
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
 (defun prelude-move-beginning-of-line (arg)
@@ -139,6 +154,8 @@
 
 
 ;; Ido Mode
+(use-package ido-vertical-mode
+  :ensure ido-vertical-mode)
 (require 'ido)
 (ido-mode t)
 (ido-vertical-mode 1)
