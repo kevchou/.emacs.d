@@ -44,7 +44,7 @@
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
 
-(defun prelude-move-beginning-of-line (arg)
+(defun move-to-beginning-of-line (arg)
   "Move to first character of line. Again to move to beginning of line."
   (interactive "^p")
   (setq arg (or arg 1))
@@ -59,7 +59,8 @@
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-(global-set-key (kbd "C-a") 'prelude-move-beginning-of-line)
+(global-set-key (kbd "C-a") 'move-to-beginning-of-line)
+
 
 ;; Move around quicker when using the bfnp keys with Shift
 (global-set-key (kbd "C-S-n")
@@ -86,25 +87,6 @@
 (add-hook 'sql-mode-hook
          (lambda()
            (auto-complete-mode)
-
-           (defconst sql-beginning-of-table-or-view-regexp
-             "^\\s-*create\\s-+\\(?:table\\|view\\)"
-             "Regular expression for matching the start of an SQL table or view definition.")
-
-           (defun sql-prev-table-or-view ()
-             "Move backwards to the beginning of the nearest table or view from point."
-             (interactive)
-             (re-search-backward sql-beginning-of-table-or-view-regexp
-                                 nil 'noerror))
-
-           (defun sql-next-table-or-view ()
-             "Move forwards to the beginning of the nearest table or view from point."
-             (interactive)
-             (re-search-forward sql-beginning-of-table-or-view-regexp
-                                nil 'noerror))
-           
-           (define-key sql-mode-map (kbd "<C-up>") 'sql-prev-table-or-view)
-           (define-key sql-mode-map (kbd "<C-down>") 'sql-next-table-or-view)
            ))
 
 
@@ -156,29 +138,15 @@
 ;; Ido Mode
 (use-package ido-vertical-mode
   :ensure ido-vertical-mode)
-(require 'ido)
 (ido-mode t)
-(ido-vertical-mode 1)
+(ido-vertical-mode t)
 (setq ido-enable-flex-matching 1)
 (setq ido-show-dot-for-dired 1)
 (icomplete-mode)                        ; Shows autocomplete in minibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer) ; Better buffer switcher
 
-;;(add-to-list 'load-path "~/.emacs.d/stuff")
-;;(require 'my-helm-stuff)                ; Helm customizations
-;; (require 'helm-config)
-;; (helm-mode t)
-;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 
-;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-
-;; ;; ;;(setq ibuffer-use-other-window t)         ; open ibuffer in another window
-
-
-
+(setq ibuffer-use-other-window t)         ; open ibuffer in another window
 
 
 
