@@ -31,6 +31,11 @@
   :ensure zenburn-theme)
 (load-theme 'zenburn t)
 
+(use-package powerline
+  :ensure powerline)
+(powerline-default-theme)
+
+
 ;; Evil mode
 ;; (require 'evil)
 ;; (evil-mode 1)
@@ -41,6 +46,7 @@
   (add-to-list 'mode-line-buffer-identification
                '(:eval (substring default-directory
                                   (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
+
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
 
@@ -79,8 +85,6 @@
                 (lambda ()
                   (interactive)
                   (ignore-errors (backward-char 5))))
-
-
 
 
 ;; SQL MODE
