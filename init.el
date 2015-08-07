@@ -14,6 +14,17 @@
 
 (require 'use-package)
 
+
+
+(use-package zenburn-theme
+  :ensure zenburn-theme)
+(load-theme 'zenburn t)
+
+
+(use-package auto-complete
+  :ensure auto-complete)
+
+
 (use-package multiple-cursors
   :ensure multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -27,14 +38,14 @@
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
 
-(use-package zenburn-theme
-  :ensure zenburn-theme)
-(load-theme 'zenburn t)
-
 (use-package powerline
   :ensure powerline)
 (powerline-default-theme)
 
+
+(use-package rainbow-delimiters
+  :ensure rainbow-delimiters)
+(rainbow-delimiters-mode t)
 
 ;; Evil mode
 ;; (require 'evil)
@@ -91,12 +102,13 @@
 (add-hook 'sql-mode-hook
          (lambda()
            (auto-complete-mode)
+           (sql-highlight-oracle-keywords)
            ))
 
 
 ;; Change some Emacs default behaviour
 (setq default-directory "~/" )
-(setq frame-title-format "%b - Emacs")  ; Show file name in title bar
+(setq frame-title-format "%b")  ; Show file name in title bar
 
 (column-number-mode 1)                  ; Col number in mode line
 (line-number-mode 1)                    ; Row number
@@ -109,7 +121,7 @@
 (global-unset-key "\C-xf")              ; Default is to set fill-column
 
 (global-hl-line-mode 1)                 ; Highlight current line
-(global-auto-revert-mode 1)             ; Refreshes buffer if file changes 
+(global-auto-revert-mode 1)             ; Refreshes buffer if file changes
 (global-font-lock-mode 1)               ; syntax highlighting
 (transient-mark-mode 1)                 ; sane select (mark) mode
 (delete-selection-mode 1)               ; Entry deletes marked text
