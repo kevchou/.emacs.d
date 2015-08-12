@@ -2,6 +2,9 @@
 ;;      My .emacs.d file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; UTF-8 as default encoding
+(set-language-environment "UTF-8")
+
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -13,7 +16,6 @@
       (package-install 'use-package)))
 
 (require 'use-package)
-
 
 
 (use-package zenburn-theme
@@ -33,14 +35,100 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
-(use-package avy
-  :ensure avy)
-(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
+(use-package ace-jump-mode
+  :ensure ace-jump-mode)
+(global-set-key (kbd "C-c j") 'ace-jump-word-mode)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Mode line modifications
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package powerline
   :ensure powerline)
 (powerline-default-theme)
+
+(defface powerline-custom1 '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
+  "Custom face for bright sections"
+  :group 'powerline)
+
+(defface powerline-custom2 '((t (:foreground "#EEAD0E" :weight bold)))
+  "Custom face for text"
+  :group 'powerline)
+
+;; (require 'anzu)
+;; (defun my/anzu-update-func (here total)
+;;   "Customizing how anzu displays HERE & TOTAL on the mode line."
+;;   (propertize (format " <%d/%d>" here total)
+;;               'face 'powerline-custom1))
+;; (setq anzu-mode-line-update-function 'my/anzu-update-func)
+
+(defun powerline-spacemacs-imitation-theme ()
+  "An attempt to imitate the spacemacs powerline theme."
+  (interactive)
+  (setq-default mode-line-format
+                '("%e"
+                  (:eval
+                   (let* ((active (powerline-selected-window-active))
+                          (mode-line (if active 'mode-line 'mode-line-inactive))
+                          (face1 (if active 'powerline-active1 'powerline-inactive1))
+                          (face2 (if active 'powerline-active2 'powerline-inactive2))
+                          (face3 (if active 'powerline-custom1 mode-line))
+                          (face4 (if active 'powerline-custom2 mode-line))
+                          (separator-left (intern (format "powerline-%s-%s"
+							  (powerline-current-separator)
+                                                          (car powerline-default-separator-dir))))
+                          (separator-right (intern (format "powerline-%s-%s"
+                                                           (powerline-current-separator)
+                                                           (cdr powerline-default-separator-dir))))
+                          (lhs (list (powerline-raw "%*" face3 'l)
+                                     (powerline-raw " " face3)
+                                     (funcall separator-left face3 mode-line)
+                                     
+                                     (when powerline-display-buffer-size
+                                       (powerline-buffer-size nil 'l))
+                                     (when powerline-display-mule-info
+                                       (powerline-raw mode-line-mule-info face4 'l))
+                                     (powerline-buffer-id face4 'l)
+                                     (when (and (boundp 'which-func-mode) which-func-mode)
+                                       (powerline-raw which-func-format nil 'l))
+                                     (powerline-raw " ")
+                                     (funcall separator-left mode-line face1)
+                                     
+                                     (when (boundp 'erc-modified-channels-object)
+                                       (powerline-raw erc-modified-channels-object face1 'l))
+                                     (powerline-major-mode face1 'l)
+                                     (powerline-process face1)
+                                     (powerline-raw " " face1)
+                                     (funcall separator-right face1 mode-line)
+                                   
+                                     (powerline-minor-modes mode-line 'l)
+                                     (powerline-narrow mode-line 'l)
+                                     (powerline-raw " " mode-line)
+                                     (funcall separator-left mode-line face1)
+                                     
+                                     (powerline-vc face1 'r)
+                                     (powerline-raw " " face1)
+                                     (funcall separator-right face1 face2)
+                                     
+                                     (when (bound-and-true-p nyan-mode)
+                                       (powerline-raw (list (nyan-create)) face2 'l))))
+                          (rhs (list (powerline-raw global-mode-string face2 'r)
+                                     (funcall separator-right face2 face1)
+				     (unless window-system
+				       (powerline-raw (char-to-string #xe0a1) face1 'l))
+				     (powerline-raw "%4l" face1 'l)
+				     (powerline-raw ":" face1 'l)
+				     (powerline-raw "%3c" face1 'r)
+				     (funcall separator-right face1 mode-line)
+				     (powerline-raw " ")
+				     (powerline-raw "%6p" nil 'r))))
+		     (concat (powerline-render lhs)
+			     (powerline-fill face2 (powerline-width rhs))
+			     (powerline-render rhs)))))))
+
+(powerline-spacemacs-imitation-theme)
+
 
 
 (use-package rainbow-delimiters
@@ -171,10 +259,37 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#eaeaea" "#d54e53" "#b9ca4a" "#e7c547" "#7aa6da" "#c397d8" "#70c0b1" "#000000"))
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("b06aaf5cefc4043ba018ca497a9414141341cb5a2152db84a9a80020d35644d1" default))))
+    ("a444b2e10bedc64e4c7f312a737271f9a2f2542c67caa13b04d525196562bf38" "d1dbb3c37e11ae8f986ca2d4b6a9d78bb1915fe66f3a6ffab1397cc746c18cba" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "2e5705ad7ee6cfd6ab5ce81e711c526ac22abed90b852ffaf0b316aa7864b11f" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "b06aaf5cefc4043ba018ca497a9414141341cb5a2152db84a9a80020d35644d1" default)))
+ '(fci-rule-color "#424242")
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#d54e53")
+     (40 . "#e78c45")
+     (60 . "#e7c547")
+     (80 . "#b9ca4a")
+     (100 . "#70c0b1")
+     (120 . "#7aa6da")
+     (140 . "#c397d8")
+     (160 . "#d54e53")
+     (180 . "#e78c45")
+     (200 . "#e7c547")
+     (220 . "#b9ca4a")
+     (240 . "#70c0b1")
+     (260 . "#7aa6da")
+     (280 . "#c397d8")
+     (300 . "#d54e53")
+     (320 . "#e78c45")
+     (340 . "#e7c547")
+     (360 . "#b9ca4a"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
