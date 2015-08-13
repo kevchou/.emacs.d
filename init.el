@@ -27,6 +27,17 @@
   :ensure auto-complete)
 
 
+(use-package rainbow-delimiters
+  :ensure rainbow-delimiters)
+(rainbow-delimiters-mode t)
+
+;; Evil mode
+(use-package eviil
+  :ensure evil)
+(evil-mode 1)
+
+
+;; Multiple cursors like in Sublime text
 (use-package multiple-cursors
   :ensure multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -35,9 +46,20 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
+;; Jump to any word in buffer quickly
 (use-package ace-jump-mode
   :ensure ace-jump-mode)
 (global-set-key (kbd "C-c j") 'ace-jump-word-mode)
+
+
+;; display current and total match when in search mode
+(use-package anzu
+  :ensure anzu)
+(global-anzu-mode 1)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -56,12 +78,12 @@
   "Custom face for text"
   :group 'powerline)
 
-;; (require 'anzu)
-;; (defun my/anzu-update-func (here total)
-;;   "Customizing how anzu displays HERE & TOTAL on the mode line."
-;;   (propertize (format " <%d/%d>" here total)
-;;               'face 'powerline-custom1))
-;; (setq anzu-mode-line-update-function 'my/anzu-update-func)
+(require 'anzu)
+(defun my/anzu-update-func (here total)
+  "Customizing how anzu displays HERE & TOTAL on the mode line."
+  (propertize (format " <%d/%d>" here total)
+              'face 'powerline-custom1))
+(setq anzu-mode-line-update-function 'my/anzu-update-func)
 
 (defun powerline-spacemacs-imitation-theme ()
   "An attempt to imitate the spacemacs powerline theme."
@@ -131,13 +153,7 @@
 
 
 
-(use-package rainbow-delimiters
-  :ensure rainbow-delimiters)
-(rainbow-delimiters-mode t)
 
-;; Evil mode
-;; (require 'evil)
-;; (evil-mode 1)
 
 ;; Add directory of file in the mode line
 (defun add-mode-line-dirtrack ()
@@ -242,14 +258,31 @@
 ;; Ido Mode
 (use-package ido-vertical-mode
   :ensure ido-vertical-mode)
+(use-package ido-ubiquitous
+  :ensure ido-ubiquitous)
+
 (ido-mode t)
-(ido-vertical-mode t)
-(setq ido-enable-flex-matching 1)
-(setq ido-show-dot-for-dired 1)
+
+(setq ido-enable-flex-matching t
+      ido-enable-prefix nil
+      ido-use-filename-at-point nil
+      ido-max-prospects 10
+      ido-show-dot-for-dired 1)
+
+(ido-vertical-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+
+(add-hook 'ido-setup-hook
+          '(lambda()
+             (define-key ido-completion-map "\C-h" 'ido-delete-backward-updir)
+             (define-key ido-common-completion-map (kbd "C-n") 'ido-next-match)
+             (define-key ido-common-completion-map (kbd "C-p") 'ido-prev-match)
+             ))
+
 (icomplete-mode)                        ; Shows autocomplete in minibuffer
+
 (global-set-key (kbd "C-x C-b") 'ibuffer) ; Better buffer switcher
-
-
 (setq ibuffer-use-other-window t)         ; open ibuffer in another window
 
 
