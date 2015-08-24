@@ -26,7 +26,12 @@
   :ensure elpy)
 (elpy-enable)
 
-
+(add-hook 'python-mode-hook
+          (lambda()
+            (hs-minor-mode t)
+            (local-set-key [C-tab] 'hs-toggle-hiding)
+            ))
+          
 
 
 
