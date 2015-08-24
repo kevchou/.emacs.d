@@ -10,14 +10,15 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+
 (if (not (package-installed-p 'use-package))
     (progn
       (package-refresh-contents)
       (package-install 'use-package)))
-
 (require 'use-package)
 
 
+;; Theme to use
 (use-package zenburn-theme
   :ensure zenburn-theme)
 (load-theme 'zenburn t)
@@ -29,12 +30,12 @@
 
 (use-package rainbow-delimiters
   :ensure rainbow-delimiters)
-(rainbow-delimiters-mode t)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; Evil mode
-(use-package eviil
-  :ensure evil)
-(evil-mode 1)
+;; (use-package eviil
+;;   :ensure evil)
+;; (evil-mode 1)
 
 
 ;; Multiple cursors like in Sublime text
@@ -61,7 +62,6 @@
 
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Mode line modifications
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -70,20 +70,22 @@
   :ensure powerline)
 (powerline-default-theme)
 
-(defface powerline-custom1 '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
+(defface powerline-custom1
+  '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
   "Custom face for bright sections"
   :group 'powerline)
 
-(defface powerline-custom2 '((t (:foreground "#EEAD0E" :weight bold)))
+(defface powerline-custom2
+  '((t (:foreground "#EEAD0E" :weight bold)))
   "Custom face for text"
   :group 'powerline)
 
-(require 'anzu)
 (defun my/anzu-update-func (here total)
   "Customizing how anzu displays HERE & TOTAL on the mode line."
   (propertize (format " <%d/%d>" here total)
               'face 'powerline-custom1))
 (setq anzu-mode-line-update-function 'my/anzu-update-func)
+
 
 (defun powerline-spacemacs-imitation-theme ()
   "An attempt to imitate the spacemacs powerline theme."
@@ -98,7 +100,7 @@
                           (face3 (if active 'powerline-custom1 mode-line))
                           (face4 (if active 'powerline-custom2 mode-line))
                           (separator-left (intern (format "powerline-%s-%s"
-							  (powerline-current-separator)
+                                                          (powerline-current-separator)
                                                           (car powerline-default-separator-dir))))
                           (separator-right (intern (format "powerline-%s-%s"
                                                            (powerline-current-separator)
@@ -123,7 +125,7 @@
                                      (powerline-process face1)
                                      (powerline-raw " " face1)
                                      (funcall separator-right face1 mode-line)
-                                   
+                                     
                                      (powerline-minor-modes mode-line 'l)
                                      (powerline-narrow mode-line 'l)
                                      (powerline-raw " " mode-line)
@@ -137,22 +139,19 @@
                                        (powerline-raw (list (nyan-create)) face2 'l))))
                           (rhs (list (powerline-raw global-mode-string face2 'r)
                                      (funcall separator-right face2 face1)
-				     (unless window-system
-				       (powerline-raw (char-to-string #xe0a1) face1 'l))
-				     (powerline-raw "%4l" face1 'l)
-				     (powerline-raw ":" face1 'l)
-				     (powerline-raw "%3c" face1 'r)
-				     (funcall separator-right face1 mode-line)
-				     (powerline-raw " ")
-				     (powerline-raw "%6p" nil 'r))))
-		     (concat (powerline-render lhs)
-			     (powerline-fill face2 (powerline-width rhs))
-			     (powerline-render rhs)))))))
+                                     (unless window-system
+                                       (powerline-raw (char-to-string #xe0a1) face1 'l))
+                                     (powerline-raw "%4l" face1 'l)
+                                     (powerline-raw ":" face1 'l)
+                                     (powerline-raw "%3c" face1 'r)
+                                     (funcall separator-right face1 mode-line)
+                                     (powerline-raw " ")
+                                     (powerline-raw "%6p" nil 'r))))
+                     (concat (powerline-render lhs)
+                             (powerline-fill face2 (powerline-width rhs))
+                             (powerline-render rhs)))))))
 
 (powerline-spacemacs-imitation-theme)
-
-
-
 
 
 ;; Add directory of file in the mode line
@@ -164,6 +163,11 @@
 
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
+
+
+;; -----------------------------------------------------------------------------
+;; Navigation tweaks
+;; -----------------------------------------------------------------------------
 
 (defun move-to-beginning-of-line (arg)
   "Move to first character of line. Again to move to beginning of line."
@@ -203,11 +207,18 @@
 
 
 ;; SQL MODE
+(fset 'copy-sql-table-name
+      (lambda (&optional arg)
+        "Keyboard macro."
+        (interactive "p")
+        (kmacro-exec-ring-item (quote ([67108896 18 32 6 134217847] 0 "%d")) arg)))
+
 (add-hook 'sql-mode-hook
-         (lambda()
-           (auto-complete-mode)
-           (sql-highlight-oracle-keywords)
-           ))
+          (lambda()
+            (auto-complete-mode)
+            (sql-highlight-oracle-keywords)
+            (local-set-key (kbd "C-c t") 'copy-sql-table-name)
+            ))
 
 
 ;; Change some Emacs default behaviour
@@ -235,7 +246,7 @@
 (setq-default fill-column 80)           ; Set default fill-column to 80
 (setq-default indent-tabs-mode nil)     ; Uses spaces as tabs
 (setq-default tab-width 4)              ; Default tab width
-(setq undo-limit 100000)                ; Increase number of undo
+(setq undo-limit 10000)                 ; Increase number of undo
 (setq initial-scratch-message "")       ; Empty scratch buffer
 (setq inhibit-startup-message t)        ; No splash screen
 
