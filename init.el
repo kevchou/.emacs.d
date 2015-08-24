@@ -10,12 +10,25 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-
 (if (not (package-installed-p 'use-package))
     (progn
       (package-refresh-contents)
       (package-install 'use-package)))
 (require 'use-package)
+
+
+
+
+;; Python - ELPY
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+(use-package elpy
+  :ensure elpy)
+(elpy-enable)
+
+
+
+
 
 
 ;; Theme to use
