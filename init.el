@@ -5,6 +5,8 @@
 ;; UTF-8 as default encoding
 (set-language-environment "UTF-8")
 
+
+;; This package lets you auto install a package if you dont have
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -15,8 +17,6 @@
       (package-refresh-contents)
       (package-install 'use-package)))
 (require 'use-package)
-
-
 
 
 ;; Python - ELPY
@@ -33,7 +33,10 @@
             ))
           
 
-
+;; Emacs Speaks Statistics
+(use-package ess
+  :ensure ess)
+(require 'ess-site)
 
 
 ;; Theme to use
@@ -50,7 +53,8 @@
   :ensure rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
-;; Evil mode
+
+;; Evil mode for VIM keys
 ;; (use-package eviil
 ;;   :ensure evil)
 ;; (evil-mode 1)
