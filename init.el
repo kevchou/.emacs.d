@@ -58,7 +58,8 @@
 (elpy-enable)
 (add-hook 'python-mode-hook
           (lambda ()
-            (highlight-indentation-mode 0)))
+            ;(highlight-indentation-mode 0)
+            ))
 
 ;; -----------------------------------------------------------------------------
 ;; Change some Emacs default behaviour
