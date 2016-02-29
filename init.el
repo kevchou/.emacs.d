@@ -11,7 +11,6 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
-
 ;; This package lets you auto install a package if you dont have it already
 (if (not (package-installed-p 'use-package))
     (progn
@@ -21,10 +20,6 @@
 
 
 ;; Theme to use
-;; (use-package zenburn-theme
-;;   :ensure zenburn-theme)
-;; (load-theme 'zenburn t)
-
 (use-package color-theme-sanityinc-tomorrow
   :ensure color-theme-sanityinc-tomorrow)
 (load-theme 'sanityinc-tomorrow-night t)
@@ -40,6 +35,7 @@
   :ensure ace-jump-mode)
 (global-set-key (kbd "C-c j") 'ace-jump-word-mode)
 
+
 ;; Multiple cursors like in Sublime Text
 (use-package multiple-cursors
   :ensure multiple-cursors)
@@ -48,11 +44,9 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-
-;; (use-package git-gutter+
-;;   :ensure git-gutter+)
-;; (global-git-gutter+-mode)
-
+;; Changes in local git repo in the gutter
+(use-package git-gutter
+  :ensure git-gutter)
 (global-git-gutter-mode)
 
 ;; Font
@@ -60,7 +54,7 @@
              '(font . "DejaVu Sans Mono-10"))
 
 
-
+;; Python
 (elpy-enable)
 
 
