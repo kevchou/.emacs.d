@@ -10,6 +10,8 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+
+
 ;; This package lets you auto install a package if you dont have it already
 (if (not (package-installed-p 'use-package))
     (progn
@@ -47,14 +49,20 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
-(use-package git-gutter+
-  :ensure git-gutter+)
-(global-git-gutter+-mode)
+;; (use-package git-gutter+
+;;   :ensure git-gutter+)
+;; (global-git-gutter+-mode)
 
+(global-git-gutter-mode)
 
 ;; Font
 (add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono-10:bold"))
+             '(font . "DejaVu Sans Mono-10"))
+
+
+
+(elpy-enable)
+
 
 ;; -----------------------------------------------------------------------------
 ;; Change some Emacs default behaviour
