@@ -56,7 +56,9 @@
 
 ;; Python
 (elpy-enable)
-
+(add-hook 'python-mode-hook
+          (lambda ()
+            (highlight-indentation-mode 0)))
 
 ;; -----------------------------------------------------------------------------
 ;; Change some Emacs default behaviour
@@ -200,7 +202,7 @@ might be bad."
   (set-buffer-file-coding-system 'utf-8))
 
 ;; Various superfluous white-space. Just say no.
-(add-hook 'before-save-hook 'cleanup-buffer-safe)
+;; (add-hook 'before-save-hook 'cleanup-buffer-safe)
 
 (defun cleanup-buffer ()
   "Perform a bunch of operations on the whitespace content of a buffer.
