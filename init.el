@@ -47,7 +47,9 @@
 ;; Changes in local git repo in the gutter
 (use-package git-gutter
   :ensure git-gutter)
-(global-git-gutter-mode)
+
+
+
 
 ;; Font
 (add-to-list 'default-frame-alist
@@ -65,6 +67,24 @@
           (lambda ()
             ;(highlight-indentation-mode 0)
             ))
+
+
+;; yafolding
+(defvar yafolding-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+    (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+    (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+    map))
+
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (yafolding-mode)
+            (git-gutter-mode)))
+
+
+
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
