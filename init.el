@@ -56,6 +56,11 @@
 
 ;; Python
 (elpy-enable)
+
+; Use ipython as default interpreter
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i")
+
 (add-hook 'python-mode-hook
           (lambda ()
             ;(highlight-indentation-mode 0)
