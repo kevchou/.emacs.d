@@ -68,14 +68,11 @@
 ;; Python
 (elpy-enable)
 
-                                        ; Use ipython as default interpreter
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i")
+;; ;; Use ipython as default interpreter
+;; (setq python-shell-interpreter "ipython")
+;;       python-shell-interpreter-args "-i")
 
-(add-hook 'python-mode-hook
-          (lambda ()
-                                        ;(highlight-indentation-mode 0)
-            ))
+
 
 
 ;; yafolding
@@ -90,7 +87,9 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (yafolding-mode)
-            (git-gutter-mode)))
+            (git-gutter-mode)
+            (git-gutter:linum-setup)
+            (linum-mode)))
 
 
 
@@ -274,7 +273,7 @@ Including indent-buffer, which should not be called automatically on save."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (web-mode zenburn-theme yafolding use-package nlinum multiple-cursors markdown-mode magit ido-vertical-mode ido-ubiquitous git-gutter evil ess elpy ein color-theme-sanityinc-tomorrow auto-complete ace-jump-mode)))
+    (git-gutter neotree fringe-helper web-mode zenburn-theme yafolding use-package nlinum multiple-cursors markdown-mode magit ido-vertical-mode ido-ubiquitous evil ess elpy ein color-theme-sanityinc-tomorrow auto-complete ace-jump-mode)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
