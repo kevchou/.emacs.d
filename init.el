@@ -54,6 +54,10 @@
   :ensure git-gutter)
 
 
+;; Tree directory
+(use-package neotree
+  :ensure neotree)
+(global-set-key [f8] 'neotree-toggle)
 
 
 ;; Font
@@ -64,13 +68,13 @@
 ;; Python
 (elpy-enable)
 
-; Use ipython as default interpreter
+                                        ; Use ipython as default interpreter
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i")
 
 (add-hook 'python-mode-hook
           (lambda ()
-            ;(highlight-indentation-mode 0)
+                                        ;(highlight-indentation-mode 0)
             ))
 
 
@@ -92,13 +96,13 @@
 
 
 (setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-    '(("." . "~/.saves"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.saves"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)
 
 ;; -----------------------------------------------------------------------------
 ;; Change some Emacs default behaviour
@@ -216,8 +220,6 @@
 (setq ibuffer-use-other-window t)         ; open ibuffer in another window
 
 
-
-
 ;; -----------------------------------------------------------------------------
 ;; SQL Mode
 ;; -----------------------------------------------------------------------------
@@ -225,11 +227,7 @@
           (lambda()
             (auto-complete-mode)
             (sql-highlight-oracle-keywords)
-            (local-set-key (kbd "C-c t") 'copy-sql-table-name)
             ))
-
-
-
 
 
 (defun cleanup-buffer-safe ()
@@ -274,6 +272,9 @@ Including indent-buffer, which should not be called automatically on save."
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (web-mode zenburn-theme yafolding use-package nlinum multiple-cursors markdown-mode magit ido-vertical-mode ido-ubiquitous git-gutter evil ess elpy ein color-theme-sanityinc-tomorrow auto-complete ace-jump-mode)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
