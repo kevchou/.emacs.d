@@ -34,7 +34,12 @@
             (package-install package)))
       myPackages)
 
-;; (require 'ess-site)
+
+(add-to-list 'auto-mode-alist
+             '("\\.sas\\'" . (lambda ()
+                               (require 'ess-site)
+                               (sas-mode))))
+
 (require 'better-defaults)
 
 
@@ -58,6 +63,7 @@
 ;; Python
 (elpy-enable)
 
+
 ;; yafolding
 (defvar yafolding-mode-map
   (let ((map (make-sparse-keymap)))
@@ -72,18 +78,20 @@
             (auto-complete-mode)
             (yafolding-mode)
             (git-gutter-mode)
-            (git-gutter:linum-setup)
-            (linum-mode)))
+            ;; (git-gutter:linum-setup)
+            ;; (linum-mode)
+            ))
 
 
 (setq
+ backup-directory-alist '(("." . "~/.saves")) 
  backup-by-copying t      ; don't clobber symlinks
- backup-directory-alist
- '(("." . "~/.saves"))    ; don't litter my fs tree
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
  version-control t)
+
+(setq auto-save-default nil)
 
 ;; -----------------------------------------------------------------------------
 ;; Change some Emacs default behaviour
@@ -93,12 +101,12 @@
 (setq initial-scratch-message "")      ; Empty scratch buffer
 (setq inhibit-startup-message t)       ; No splash screen
 (setq default-directory "~/" )         ; Set default directory to HOME
-(setq undo-limit 1000)                  ; Increase number of undo
+(setq undo-limit 10000)                ; Increase number of undo
 
 (blink-cursor-mode 0)                  ; Remove cursor blink
 (column-number-mode 1)                 ; Col number in mode line
 (line-number-mode 1)                   ; Row number
-(global-hl-line-mode 1)                ; Highlight current line
+(global-hl-line-mode 0)                ; Highlight current line
 (global-auto-revert-mode 1)            ; Refreshes buffer if file changes
 (delete-selection-mode 1)               ; Entry deletes marked text
 
@@ -208,7 +216,7 @@ Including indent-buffer, which should not be called automatically on save."
   (indent-region (point-min) (point-max)))
 
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
-(add-hook 'before-save-hook 'cleanup-buffer-safe) ; Cleans up whitespace when saving
+;; (add-hook 'before-save-hook 'cleanup-buffer-safe) ; Cleans up whitespace when saving
 
 
 (custom-set-variables
