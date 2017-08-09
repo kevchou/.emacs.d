@@ -291,8 +291,6 @@
 ;; Ido Mode
 (use-package ido-vertical-mode
   :ensure ido-vertical-mode)
-(use-package ido-ubiquitous
-  :ensure ido-ubiquitous)
 
 (ido-mode t)
 
@@ -302,7 +300,6 @@
       ido-max-prospects 10
       ido-show-dot-for-dired 1)
 
-(ido-vertical-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
 
@@ -334,6 +331,9 @@
    (quote
     ("a444b2e10bedc64e4c7f312a737271f9a2f2542c67caa13b04d525196562bf38" "d1dbb3c37e11ae8f986ca2d4b6a9d78bb1915fe66f3a6ffab1397cc746c18cba" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "2e5705ad7ee6cfd6ab5ce81e711c526ac22abed90b852ffaf0b316aa7864b11f" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "b06aaf5cefc4043ba018ca497a9414141341cb5a2152db84a9a80020d35644d1" default)))
  '(fci-rule-color "#424242")
+ '(package-selected-packages
+   (quote
+    (ido-ubiquitous ido-vertical-mode anzu ace-jump-mode multiple-cursors auto-complete zenburn-theme ess git-gutter-fringe+ elpy exec-path-from-shell use-package)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
