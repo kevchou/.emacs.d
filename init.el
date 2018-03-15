@@ -24,6 +24,9 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
+;; magit
+(use-package magit
+  :ensure magit)
 
 ;; Python - ELPY
 (add-to-list 'package-archives
@@ -88,92 +91,92 @@
 ;; Mode line modifications
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (use-package powerline
-;;   :ensure powerline)
-;; (powerline-default-theme)
+(use-package powerline
+  :ensure powerline)
+(powerline-default-theme)
 
-;; (defface powerline-custom1
-;;   '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
-;;   "Custom face for bright sections"
-;;   :group 'powerline)
+(defface powerline-custom1
+  '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
+  "Custom face for bright sections"
+  :group 'powerline)
 
-;; (defface powerline-custom2
-;;   '((t (:foreground "#EEAD0E" :weight bold)))
-;;   "Custom face for text"
-;;   :group 'powerline)
+(defface powerline-custom2
+  '((t (:foreground "#EEAD0E" :weight bold)))
+  "Custom face for text"
+  :group 'powerline)
 
-;; (defun my/anzu-update-func (here total)
-;;   "Customizing how anzu displays HERE & TOTAL on the mode line."
-;;   (propertize (format " <%d/%d>" here total)
-;;               'face 'powerline-custom1))
-;; (setq anzu-mode-line-update-function 'my/anzu-update-func)
+(defun my/anzu-update-func (here total)
+  "Customizing how anzu displays HERE & TOTAL on the mode line."
+  (propertize (format " <%d/%d>" here total)
+              'face 'powerline-custom1))
+(setq anzu-mode-line-update-function 'my/anzu-update-func)
 
 
-;; (defun powerline-spacemacs-imitation-theme ()
-;;   "An attempt to imitate the spacemacs powerline theme."
-;;   (interactive)
-;;   (setq-default mode-line-format
-;;                 '("%e"
-;;                   (:eval
-;;                    (let* ((active (powerline-selected-window-active))
-;;                           (mode-line (if active 'mode-line 'mode-line-inactive))
-;;                           (face1 (if active 'powerline-active1 'powerline-inactive1))
-;;                           (face2 (if active 'powerline-active2 'powerline-inactive2))
-;;                           (face3 (if active 'powerline-custom1 mode-line))
-;;                           (face4 (if active 'powerline-custom2 mode-line))
-;;                           (separator-left (intern (format "powerline-%s-%s"
-;;                                                           (powerline-current-separator)
-;;                                                           (car powerline-default-separator-dir))))
-;;                           (separator-right (intern (format "powerline-%s-%s"
-;;                                                            (powerline-current-separator)
-;;                                                            (cdr powerline-default-separator-dir))))
-;;                           (lhs (list (powerline-raw "%*" face3 'l)
-;;                                      (powerline-raw " " face3)
-;;                                      (funcall separator-left face3 mode-line)
+(defun powerline-spacemacs-imitation-theme ()
+  "An attempt to imitate the spacemacs powerline theme."
+  (interactive)
+  (setq-default mode-line-format
+                '("%e"
+                  (:eval
+                   (let* ((active (powerline-selected-window-active))
+                          (mode-line (if active 'mode-line 'mode-line-inactive))
+                          (face1 (if active 'powerline-active1 'powerline-inactive1))
+                          (face2 (if active 'powerline-active2 'powerline-inactive2))
+                          (face3 (if active 'powerline-custom1 mode-line))
+                          (face4 (if active 'powerline-custom2 mode-line))
+                          (separator-left (intern (format "powerline-%s-%s"
+                                                          (powerline-current-separator)
+                                                          (car powerline-default-separator-dir))))
+                          (separator-right (intern (format "powerline-%s-%s"
+                                                           (powerline-current-separator)
+                                                           (cdr powerline-default-separator-dir))))
+                          (lhs (list (powerline-raw "%*" face3 'l)
+                                     (powerline-raw " " face3)
+                                     (funcall separator-left face3 mode-line)
                                      
-;;                                      (when powerline-display-buffer-size
-;;                                        (powerline-buffer-size nil 'l))
-;;                                      (when powerline-display-mule-info
-;;                                        (powerline-raw mode-line-mule-info face4 'l))
-;;                                      (powerline-buffer-id face4 'l)
-;;                                      (when (and (boundp 'which-func-mode) which-func-mode)
-;;                                        (powerline-raw which-func-format nil 'l))
-;;                                      (powerline-raw " ")
-;;                                      (funcall separator-left mode-line face1)
+                                     (when powerline-display-buffer-size
+                                       (powerline-buffer-size nil 'l))
+                                     (when powerline-display-mule-info
+                                       (powerline-raw mode-line-mule-info face4 'l))
+                                     (powerline-buffer-id face4 'l)
+                                     (when (and (boundp 'which-func-mode) which-func-mode)
+                                       (powerline-raw which-func-format nil 'l))
+                                     (powerline-raw " ")
+                                     (funcall separator-left mode-line face1)
                                      
-;;                                      (when (boundp 'erc-modified-channels-object)
-;;                                        (powerline-raw erc-modified-channels-object face1 'l))
-;;                                      (powerline-major-mode face1 'l)
-;;                                      (powerline-process face1)
-;;                                      (powerline-raw " " face1)
-;;                                      (funcall separator-right face1 mode-line)
+                                     (when (boundp 'erc-modified-channels-object)
+                                       (powerline-raw erc-modified-channels-object face1 'l))
+                                     (powerline-major-mode face1 'l)
+                                     (powerline-process face1)
+                                     (powerline-raw " " face1)
+                                     (funcall separator-right face1 mode-line)
                                      
-;;                                      (powerline-minor-modes mode-line 'l)
-;;                                      (powerline-narrow mode-line 'l)
-;;                                      (powerline-raw " " mode-line)
-;;                                      (funcall separator-left mode-line face1)
+                                     (powerline-minor-modes mode-line 'l)
+                                     (powerline-narrow mode-line 'l)
+                                     (powerline-raw " " mode-line)
+                                     (funcall separator-left mode-line face1)
                                      
-;;                                      (powerline-vc face1 'r)
-;;                                      (powerline-raw " " face1)
-;;                                      (funcall separator-right face1 face2)
+                                     (powerline-vc face1 'r)
+                                     (powerline-raw " " face1)
+                                     (funcall separator-right face1 face2)
                                      
-;;                                      (when (bound-and-true-p nyan-mode)
-;;                                        (powerline-raw (list (nyan-create)) face2 'l))))
-;;                           (rhs (list (powerline-raw global-mode-string face2 'r)
-;;                                      (funcall separator-right face2 face1)
-;;                                      (unless window-system
-;;                                        (powerline-raw (char-to-string #xe0a1) face1 'l))
-;;                                      (powerline-raw "%4l" face1 'l)
-;;                                      (powerline-raw ":" face1 'l)
-;;                                      (powerline-raw "%3c" face1 'r)
-;;                                      (funcall separator-right face1 mode-line)
-;;                                      (powerline-raw " ")
-;;                                      (powerline-raw "%6p" nil 'r))))
-;;                      (concat (powerline-render lhs)
-;;                              (powerline-fill face2 (powerline-width rhs))
-;;                              (powerline-render rhs)))))))
+                                     (when (bound-and-true-p nyan-mode)
+                                       (powerline-raw (list (nyan-create)) face2 'l))))
+                          (rhs (list (powerline-raw global-mode-string face2 'r)
+                                     (funcall separator-right face2 face1)
+                                     (unless window-system
+                                       (powerline-raw (char-to-string #xe0a1) face1 'l))
+                                     (powerline-raw "%4l" face1 'l)
+                                     (powerline-raw ":" face1 'l)
+                                     (powerline-raw "%3c" face1 'r)
+                                     (funcall separator-right face1 mode-line)
+                                     (powerline-raw " ")
+                                     (powerline-raw "%6p" nil 'r))))
+                     (concat (powerline-render lhs)
+                             (powerline-fill face2 (powerline-width rhs))
+                             (powerline-render rhs)))))))
 
-;; (powerline-spacemacs-imitation-theme)
+(powerline-spacemacs-imitation-theme)
 
 
 ;; Add directory of file in the mode line
@@ -229,17 +232,10 @@
 
 
 ;; SQL MODE
-(fset 'copy-sql-table-name
-      (lambda (&optional arg)
-        "Keyboard macro."
-        (interactive "p")
-        (kmacro-exec-ring-item (quote ([67108896 18 32 6 134217847] 0 "%d")) arg)))
-
 (add-hook 'sql-mode-hook
           (lambda()
             (auto-complete-mode)
             (sql-highlight-oracle-keywords)
-            (local-set-key (kbd "C-c t") 'copy-sql-table-name)
             ))
 
 
@@ -293,6 +289,7 @@
   :ensure ido-vertical-mode)
 
 (ido-mode t)
+(ido-vertical-mode t)
 
 (setq ido-enable-flex-matching t
       ido-enable-prefix nil
@@ -301,7 +298,6 @@
       ido-show-dot-for-dired 1)
 
 (ido-everywhere 1)
-(ido-ubiquitous-mode 1)
 
 (add-hook 'ido-setup-hook
           '(lambda()
@@ -312,8 +308,8 @@
 
 (icomplete-mode)                        ; Shows autocomplete in minibuffer
 
-(global-set-key (kbd "C-x C-b") 'ibuffer) ; Better buffer switcher
-(setq ibuffer-use-other-window t)         ; open ibuffer in another window
+; (global-set-key (kbd "C-x C-b") 'ibuffer) ; Better buffer switcher
+; (setq ibuffer-use-other-window t)         ; open ibuffer in another window
 
 
 
@@ -333,7 +329,7 @@
  '(fci-rule-color "#424242")
  '(package-selected-packages
    (quote
-    (ido-ubiquitous ido-vertical-mode anzu ace-jump-mode multiple-cursors auto-complete zenburn-theme ess git-gutter-fringe+ elpy exec-path-from-shell use-package)))
+    (magit ido-ubiquitous ido-vertical-mode anzu ace-jump-mode multiple-cursors auto-complete zenburn-theme ess git-gutter-fringe+ elpy exec-path-from-shell use-package)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
